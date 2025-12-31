@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>MAX | Sistema de Gestão - Instituto Luiz Segundo</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23d4bc7c'/%3E%3Cstop offset='100%25' stop-color='%239a7b3a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg transform='rotate(45 50 50)'%3E%3Cpolygon points='15,15 15,85 35,85 35,35 55,35 55,15' fill='url(%23g)'/%3E%3Cpolygon points='45,15 45,35 65,35 65,55 45,55 45,45 85,45 85,15' fill='url(%23g)'/%3E%3Cpolygon points='55,55 55,65 35,65 35,85 85,85 85,55' fill='url(%23g)'/%3E%3C/g%3E%3C/svg%3E">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --verde-oliva: #4a5a4c;
+            --verde-escuro: #3a4a3c;
+            --verde-profundo: #2d3a2e;
+            --dourado: #c9a962;
+            --dourado-claro: #d4bc7c;
+            --dourado-escuro: #9a7b3a;
+            --creme: #faf8f5;
+            --creme-escuro: #f0ede6;
+            --branco: #ffffff;
+            --cinza-texto: #5a5a5a;
+            --cinza-claro: #9a9a9a;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--creme);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Background Premium */
+        .premium-bg {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .leaf-shadow {
+            position: absolute;
+            background: linear-gradient(135deg, rgba(74,90,76,0.08) 0%, rgba(74,90,76,0.03) 50%, transparent 100%);
+            border-radius: 50%;
+            filter: blur(30px);
+            animation: leafSway 20s ease-in-out infinite;
+        }
+
+        .leaf-shadow.top-right { width: 500px; height: 600px; top: -150px; right: -100px; transform: rotate(-30deg); }
+        .leaf-shadow.top-left { width: 400px; height: 500px; top: -100px; left: -150px; transform: rotate(20deg); animation-delay: -5s; opacity: 0.7; }
+        .leaf-shadow.bottom-right { width: 350px; height: 450px; bottom: -100px; right: 10%; transform: rotate(15deg); animation-delay: -10s; opacity: 0.5; }
+
+        @keyframes leafSway {
+            0%, 100% { transform: rotate(-30deg) translate(0, 0); opacity: 0.6; }
+            50% { transform: rotate(-32deg) translate(-5px, 10px); opacity: 0.5; }
+        }
+
+        .texture {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            opacity: 0.015;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+        }
+
+        /* Login Container */
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .login-card {
+            background: var(--branco);
+            border: 1px solid rgba(74,90,76,0.08);
+            border-radius: 25px;
+            padding: 50px 45px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 25px 60px rgba(74,90,76,0.12), 0 0 0 1px rgba(255,255,255,0.8) inset;
+            text-align: center;
+        }
+
+        .login-logo {
+            margin-bottom: 30px;
+        }
+
+        .login-logo svg {
+            width: 70px;
+            height: 70px;
+            filter: drop-shadow(2px 4px 12px rgba(154,123,58,0.25));
+        }
+
+        .login-brand {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--verde-oliva);
+            letter-spacing: 4px;
+            margin-top: 15px;
+        }
+
+        .login-subtitle {
+            font-size: 0.75rem;
+            color: var(--cinza-claro);
+            margin-top: 5px;
+            letter-spacing: 1px;
+        }
+
+        .login-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            color: var(--verde-oliva);
+            margin: 30px 0 10px;
+        }
+
+        .login-desc {
+            font-size: 0.85rem;
+            color: var(--cinza-claro);
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--verde-oliva);
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            background: var(--creme);
+            border: 1px solid rgba(74,90,76,0.15);
+            border-radius: 12px;
+            padding: 14px 18px;
+            font-size: 0.9rem;
+            color: var(--cinza-texto);
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--dourado);
+            box-shadow: 0 0 0 4px rgba(201,169,98,0.1);
+        }
+
+        .form-group input::placeholder {
+            color: var(--cinza-claro);
+        }
+
+        .btn-login {
+            width: 100%;
+            background: var(--verde-oliva);
+            color: var(--creme);
+            border: none;
+            border-radius: 12px;
+            padding: 16px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .btn-login:hover {
+            background: var(--verde-escuro);
+            box-shadow: 0 8px 25px rgba(74,90,76,0.25);
+            transform: translateY(-2px);
+        }
+
+        .login-footer {
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid rgba(74,90,76,0.08);
+        }
+
+        .login-footer a {
+            font-size: 0.8rem;
+            color: var(--dourado);
+            text-decoration: none;
+        }
+
+        .login-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .login-help {
+            margin-top: 15px;
+            font-size: 0.75rem;
+            color: var(--cinza-claro);
+        }
+
+        /* Sistema */
+        .sistema {
+            display: none;
+            min-height: 100vh;
+            flex-direction: column;
+            position: relative;
+            z-index: 10;
+        }
+
+        .sistema.active {
+            display: flex;
+        }
+
+        /* Top Nav */
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background: var(--branco);
+            border-bottom: 1px solid rgba(74,90,76,0.08);
+            box-shadow: 0 4px 20px rgba(74,90,76,0.06);
+        }
+
+        .nav-left { display: flex; align-items: center; gap: 25px; }
+
+        .logo-sistema { display: flex; align-items: center; gap: 12px; }
+        .logo-sistema svg { width: 36px; height: 36px; }
+        .logo-sistema .brand-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--verde-oliva);
+            letter-spacing: 4px;
+        }
+
+        .nav-sep { width: 1px; height: 30px; background: rgba(74,90,76,0.15); }
+
+        .nav-menu { display: flex; gap: 5px; }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            position: relative;
+            color: var(--cinza-claro);
+            text-decoration: none;
+        }
+
+        .nav-item:hover { background: rgba(74,90,76,0.05); color: var(--verde-oliva); }
+        .nav-item.active { background: var(--verde-oliva); color: var(--creme); }
+        .nav-item .nav-icon { font-size: 1.15rem; }
+        .nav-item .nav-label { font-size: 0.78rem; font-weight: 500; }
+
+        .nav-item .badge {
+            position: absolute;
+            top: 4px; right: 4px;
+            background: #e74c3c;
+            color: white;
+            font-size: 0.55rem;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 10px;
+        }
+
+        .nav-right { display: flex; align-items: center; gap: 15px; }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--creme);
+            border: 1px solid rgba(74,90,76,0.1);
+            border-radius: 25px;
+            padding: 10px 18px;
+            width: 200px;
+            transition: all 0.3s ease;
+        }
+
+        .search-box:focus-within { border-color: var(--dourado); width: 260px; }
+        .search-box input {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--cinza-texto);
+            font-size: 0.82rem;
+            width: 100%;
+        }
+
+        .search-box input::placeholder { color: var(--cinza-claro); }
+
+        .icon-btn {
+            width: 42px; height: 42px;
+            border-radius: 12px;
+            background: var(--creme);
+            border: 1px solid rgba(74,90,76,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            position: relative;
+            color: var(--verde-oliva);
+            font-size: 1.1rem;
+        }
+
+        .icon-btn:hover { background: var(--verde-oliva); color: var(--creme); }
+        .icon-btn .notif {
+            position: absolute;
+            top: -4px; right: -4px;
+            background: #e74c3c;
+            color: white;
+            font-size: 0.55rem;
+            padding: 3px 6px;
+            border-radius: 10px;
+        }
+
+        .user-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 6px 16px 6px 6px;
+            border-radius: 25px;
+            background: var(--creme);
+            border: 1px solid rgba(74,90,76,0.1);
+            cursor: pointer;
+        }
+
+        .user-btn svg { width: 32px; height: 32px; }
+        .user-btn .name { font-size: 0.85rem; font-weight: 500; color: var(--verde-oliva); }
+
+        /* Workspace */
+        .workspace {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+        }
+
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 22px;
+            margin-bottom: 28px;
+        }
+
+        .kpi-card {
+            background: var(--branco);
+            border: 1px solid rgba(74,90,76,0.08);
+            border-radius: 18px;
+            padding: 22px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .kpi-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--dourado), var(--dourado-claro));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .kpi-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(74,90,76,0.12); }
+        .kpi-card:hover::before { opacity: 1; }
+
+        .kpi-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
+
+        .kpi-icon {
+            width: 48px; height: 48px;
+            background: linear-gradient(135deg, rgba(201,169,98,0.15) 0%, rgba(201,169,98,0.05) 100%);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+        }
+
+        .kpi-trend { font-size: 0.68rem; padding: 4px 10px; border-radius: 15px; font-weight: 500; }
+        .kpi-trend.up { background: rgba(46,204,113,0.12); color: #2ecc71; }
+        .kpi-trend.down { background: rgba(231,76,60,0.12); color: #e74c3c; }
+
+        .kpi-value {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.4rem;
+            font-weight: 600;
+            color: var(--verde-oliva);
+            margin-bottom: 5px;
+        }
+
+        .kpi-label { font-size: 0.75rem; color: var(--cinza-claro); font-weight: 500; }
+
+        .panels-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 22px; }
+
+        .panel {
+            background: var(--branco);
+            border: 1px solid rgba(74,90,76,0.08);
+            border-radius: 18px;
+            overflow: hidden;
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 24px;
+            border-bottom: 1px solid rgba(74,90,76,0.06);
+        }
+
+        .panel-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.15rem;
+            font-weight: 500;
+            color: var(--verde-oliva);
+        }
+
+        .panel-action { font-size: 0.75rem; color: var(--dourado); cursor: pointer; font-weight: 500; }
+        .panel-body { padding: 20px 24px; }
+
+        .schedule-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: var(--creme);
+            border-radius: 12px;
+            margin-bottom: 12px;
+            border-left: 3px solid transparent;
+            transition: all 0.25s ease;
+            cursor: pointer;
+        }
+
+        .schedule-item:hover { background: rgba(201,169,98,0.08); border-left-color: var(--dourado); transform: translateX(5px); }
+
+        .schedule-time {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--dourado);
+            min-width: 55px;
+        }
+
+        .schedule-info { flex: 1; }
+        .schedule-info .name { font-weight: 500; color: var(--verde-oliva); font-size: 0.92rem; margin-bottom: 3px; }
+        .schedule-info .detail { font-size: 0.75rem; color: var(--cinza-claro); }
+
+        .schedule-tag { padding: 5px 12px; border-radius: 15px; font-size: 0.68rem; font-weight: 500; }
+        .schedule-tag.new { background: rgba(52,152,219,0.12); color: #3498db; }
+        .schedule-tag.return { background: rgba(46,204,113,0.12); color: #2ecc71; }
+        .schedule-tag.preop { background: rgba(241,196,15,0.12); color: #f1c40f; }
+
+        .alert-item {
+            display: flex;
+            gap: 12px;
+            padding: 14px;
+            background: var(--creme);
+            border-radius: 12px;
+            margin-bottom: 12px;
+        }
+
+        .alert-icon {
+            width: 38px; height: 38px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+
+        .alert-icon.urgent { background: rgba(231,76,60,0.12); }
+        .alert-icon.warning { background: rgba(241,196,15,0.12); }
+        .alert-icon.info { background: rgba(52,152,219,0.12); }
+
+        .alert-content h4 { font-size: 0.88rem; font-weight: 500; color: var(--verde-oliva); margin-bottom: 3px; }
+        .alert-content p { font-size: 0.72rem; color: var(--cinza-claro); }
+
+        /* Coming Soon Overlay */
+        .coming-soon {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .coming-soon.active { display: flex; }
+
+        .coming-soon-card {
+            background: var(--branco);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            max-width: 400px;
+        }
+
+        .coming-soon-card h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            color: var(--verde-oliva);
+            margin-bottom: 15px;
+        }
+
+        .coming-soon-card p {
+            color: var(--cinza-claro);
+            margin-bottom: 25px;
+        }
+
+        .coming-soon-card button {
+            background: var(--verde-oliva);
+            color: var(--creme);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 1200px) {
+            .nav-item .nav-label { display: none; }
+        }
+
+        @media (max-width: 768px) {
+            .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+            .panels-grid { grid-template-columns: 1fr; }
+            .top-nav { padding: 10px 15px; }
+            .nav-menu { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background -->
+    <div class="premium-bg">
+        <div class="leaf-shadow top-right"></div>
+        <div class="leaf-shadow top-left"></div>
+        <div class="leaf-shadow bottom-right"></div>
+        <div class="texture"></div>
+    </div>
+
+    <!-- SVG Logo -->
+    <svg style="display: none;">
+        <defs>
+            <linearGradient id="logoGold" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#d4bc7c"/>
+                <stop offset="40%" stop-color="#c9a962"/>
+                <stop offset="100%" stop-color="#9a7b3a"/>
+            </linearGradient>
+            <symbol id="logo-ls" viewBox="0 0 100 100">
+                <g transform="rotate(45 50 50)">
+                    <polygon points="15,15 15,85 35,85 35,35 55,35 55,15" fill="url(#logoGold)"/>
+                    <polygon points="45,15 45,35 65,35 65,55 45,55 45,45 85,45 85,15" fill="url(#logoGold)"/>
+                    <polygon points="55,55 55,65 35,65 35,85 85,85 85,55" fill="url(#logoGold)"/>
+                </g>
+            </symbol>
+        </defs>
+    </svg>
+
+    <!-- Login Page -->
+    <div class="login-container" id="loginPage">
+        <div class="login-card">
+            <div class="login-logo">
+                <svg viewBox="0 0 100 100"><use href="#logo-ls"/></svg>
+                <div class="login-brand">MAX</div>
+                <div class="login-subtitle">Sistema de Gestão</div>
+            </div>
+
+            <h1 class="login-title">Área Restrita</h1>
+            <p class="login-desc">Acesso exclusivo para equipe do Instituto</p>
+
+            <form onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="email" placeholder="seu@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Senha</label>
+                    <input type="password" id="password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn-login">Entrar</button>
+            </form>
+
+            <div class="login-footer">
+                <a href="#">Esqueci minha senha</a>
+                <p class="login-help">Problemas para acessar? Fale com o suporte.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sistema -->
+    <div class="sistema" id="sistema">
+        <nav class="top-nav">
+            <div class="nav-left">
+                <div class="logo-sistema">
+                    <svg><use href="#logo-ls"/></svg>
+                    <span class="brand-text">MAX</span>
+                </div>
+                <div class="nav-sep"></div>
+                <div class="nav-menu">
+                    <div class="nav-item active"><span class="nav-icon">📊</span><span class="nav-label">Dashboard</span></div>
+                    <div class="nav-item" onclick="showComingSoon()"><span class="nav-icon">👥</span><span class="nav-label">Pacientes</span><span class="badge">1.4k</span></div>
+                    <div class="nav-item" onclick="showComingSoon()"><span class="nav-icon">💬</span><span class="nav-label">Chat</span><span class="badge">12</span></div>
+                    <div class="nav-item" onclick="showComingSoon()"><span class="nav-icon">📅</span><span class="nav-label">Agenda</span></div>
+                    <div class="nav-item" onclick="showComingSoon()"><span class="nav-icon">🩺</span><span class="nav-label">Consulta</span></div>
+                    <div class="nav-item" onclick="showComingSoon()"><span class="nav-icon">🏥</span><span class="nav-label">Cirurgia</span></div>
+                    <div class="nav-item" onclick="showComingSoon()"><span class="nav-icon">📄</span><span class="nav-label">Docs</span><span class="badge">5</span></div>
+                    <div class="nav-item" onclick="showComingSoon()"><span class="nav-icon">💰</span><span class="nav-label">Financeiro</span></div>
+                    <div class="nav-item" onclick="showComingSoon()"><span class="nav-icon">✅</span><span class="nav-label">Tarefas</span></div>
+                </div>
+            </div>
+            <div class="nav-right">
+                <div class="search-box">
+                    <span>🔍</span>
+                    <input type="text" placeholder="Buscar...">
+                </div>
+                <div class="icon-btn" onclick="window.open('https://www.drluizsegundo.com', '_blank')">🌐</div>
+                <div class="icon-btn">🔔<span class="notif">3</span></div>
+                <div class="icon-btn" onclick="handleLogout()">🚪</div>
+                <div class="user-btn">
+                    <svg><use href="#logo-ls"/></svg>
+                    <span class="name">Dr. Luiz</span>
+                </div>
+            </div>
+        </nav>
+
+        <main class="workspace">
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-top">
+                        <div class="kpi-icon">📅</div>
+                        <span class="kpi-trend up">+2</span>
+                    </div>
+                    <div class="kpi-value">6</div>
+                    <div class="kpi-label">Consultas Hoje</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-top">
+                        <div class="kpi-icon">💬</div>
+                        <span class="kpi-trend up">Novos</span>
+                    </div>
+                    <div class="kpi-value">12</div>
+                    <div class="kpi-label">Mensagens</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-top">
+                        <div class="kpi-icon">⚠️</div>
+                        <span class="kpi-trend down">2 urg</span>
+                    </div>
+                    <div class="kpi-value">8</div>
+                    <div class="kpi-label">Pendências</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-top">
+                        <div class="kpi-icon">💰</div>
+                        <span class="kpi-trend up">+15%</span>
+                    </div>
+                    <div class="kpi-value">45.2k</div>
+                    <div class="kpi-label">Faturamento</div>
+                </div>
+            </div>
+
+            <div class="panels-grid">
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3 class="panel-title">📅 Agenda do Dia</h3>
+                        <span class="panel-action">Ver completa →</span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="schedule-item">
+                            <div class="schedule-time">08:00</div>
+                            <div class="schedule-info">
+                                <div class="name">João Silva</div>
+                                <div class="detail">Hérnia Inguinal • Unimed</div>
+                            </div>
+                            <span class="schedule-tag new">1ª vez</span>
+                        </div>
+                        <div class="schedule-item">
+                            <div class="schedule-time">08:30</div>
+                            <div class="schedule-info">
+                                <div class="name">Maria Santos</div>
+                                <div class="detail">Diástase • Nova Saúde</div>
+                            </div>
+                            <span class="schedule-tag return">Retorno</span>
+                        </div>
+                        <div class="schedule-item">
+                            <div class="schedule-time">09:30</div>
+                            <div class="schedule-info">
+                                <div class="name">Pedro Lima</div>
+                                <div class="detail">Hérnia Umbilical • Particular</div>
+                            </div>
+                            <span class="schedule-tag preop">Pré-op</span>
+                        </div>
+                        <div class="schedule-item">
+                            <div class="schedule-time">10:00</div>
+                            <div class="schedule-info">
+                                <div class="name">Ana Costa</div>
+                                <div class="detail">Hérnia Incisional • Unimed</div>
+                            </div>
+                            <span class="schedule-tag new">1ª vez</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3 class="panel-title">🔔 Alertas</h3>
+                        <span class="panel-action">Ver todos →</span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="alert-item">
+                            <div class="alert-icon urgent">🔴</div>
+                            <div class="alert-content">
+                                <h4>Cirurgia amanhã</h4>
+                                <p>Maria Santos - Confirmar equipe</p>
+                            </div>
+                        </div>
+                        <div class="alert-item">
+                            <div class="alert-icon warning">📄</div>
+                            <div class="alert-content">
+                                <h4>3 documentos pendentes</h4>
+                                <p>Aguardando assinatura D4Sign</p>
+                            </div>
+                        </div>
+                        <div class="alert-item">
+                            <div class="alert-icon info">💳</div>
+                            <div class="alert-content">
+                                <h4>NF Nova Saúde</h4>
+                                <p>Prazo de emissão vence hoje</p>
+                            </div>
+                        </div>
+                        <div class="alert-item">
+                            <div class="alert-icon warning">📞</div>
+                            <div class="alert-content">
+                                <h4>Follow-up DPO 7</h4>
+                                <p>Carlos Mendes - Ligar hoje</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Coming Soon Modal -->
+    <div class="coming-soon" id="comingSoon">
+        <div class="coming-soon-card">
+            <h2>🚧 Em Desenvolvimento</h2>
+            <p>Este módulo está sendo construído e estará disponível em breve!</p>
+            <button onclick="hideComingSoon()">Entendi</button>
+        </div>
+    </div>
+
+    <script>
+        // Demo login (substituir por autenticação real)
+        function handleLogin(e) {
+            e.preventDefault();
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('sistema').classList.add('active');
+        }
+
+        function handleLogout() {
+            document.getElementById('sistema').classList.remove('active');
+            document.getElementById('loginPage').style.display = 'flex';
+        }
+
+        function showComingSoon() {
+            document.getElementById('comingSoon').classList.add('active');
+        }
+
+        function hideComingSoon() {
+            document.getElementById('comingSoon').classList.remove('active');
+        }
+
+        // Nav items click
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function() {
+                if (!this.hasAttribute('onclick')) {
+                    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
