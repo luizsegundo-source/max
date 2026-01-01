@@ -1,0 +1,24 @@
+{
+  "mcpServers": {
+    "n8n-mcp": {
+      "command": "npx",
+      "args": [
+        "-y", "supergateway",
+        "--streamableHttp", "https://lisemax.app.n8n.cloud/mcp-server/http",
+        "--header", "authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+      ]
+    },
+    "supabase": {
+      "type": "http",
+      "url": "https://mcp.supabase.com/mcp?project_ref=txhxpasuyxdhlkyqmmii"
+    },
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/home/user/max"
+      ]
+    }
+  }
+}
