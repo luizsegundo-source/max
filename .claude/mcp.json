@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "supabase": {
+      "type": "http",
+      "url": "https://mcp.supabase.com/mcp?project_ref=txhxpasuyxdhlkyqmmii&features=docs%2Caccount%2Cdatabase%2Cdebugging%2Cdevelopment%2Cfunctions%2Cbranching%2Cstorage"
+    },
+    "n8n-mcp": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "supergateway",
+        "--streamableHttp",
+        "https://lisemax.app.n8n.cloud/mcp-server/http",
+        "--header",
+        "Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmMGNmNDkzZS1mNTgwLTQ1NTEtYTczNi1lMDU5MjY1YjhiYmUiLCJpc3MiOiJuOG4iLCJhdWQiOiJzY3Atc2VydmVyLWFwaSIsImp0aSI6IjE3YmZkMDUzLTI1NGUtNDJjOC1iZjI0LTliMjZiNGRkNDY3ZiIsImlhdCI6MTc2NjQ2MjA5N30.08o-1oogBN3AnCKNgKFmUUV6-uB95PNR8JY2xD04ALY"
+      ]
+    }
+  }
+}
